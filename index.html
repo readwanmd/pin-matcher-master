@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pin Generator</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div id="pinGeneratArea" class="pin-generator half-width">
+                    <input id="randomPin" class="form-control text-center" type="text" disabled>
+                    <button id="generateBtn" class="generate-btn"
+                        onclick="document.getElementById('randomPin').value=Math.floor(1000 + Math.random() * 9000)">Generate
+                        Pin</button>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="input-section half-width">
+                    <input id="enterPin" class="form-control text-center" type="text" disabled>
+                    <div class="numbers">
+                        <div class="calc-body">
+                            <div class="calc-button-row">
+                                <div class="button" onclick="document.getElementById('enterPin').value+='7'">7</div>
+                                <div class="button" onclick="document.getElementById('enterPin').value+='8'">8</div>
+                                <div class="button" onclick="document.getElementById('enterPin').value+='9'">9</div>
+                            </div>
+                            <div class="calc-button-row">
+                                <div class="button" onclick="document.getElementById('enterPin').value+='4'">4</div>
+                                <div class="button" onclick="document.getElementById('enterPin').value+='5'">5</div>
+                                <div class="button" onclick="document.getElementById('enterPin').value+='6'">6</div>
+                            </div>
+                            <div class="calc-button-row">
+                                <div class="button" onclick="document.getElementById('enterPin').value+='1'">1</div>
+                                <div class="button" onclick="document.getElementById('enterPin').value+='2'">2</div>
+                                <div class="button" onclick="document.getElementById('enterPin').value+='3'">3</div>
+                            </div>
+                            <div class="calc-button-row">
+                                <div class="button"
+                                    onclick="document.getElementById('enterPin').value=document.getElementById('enterPin').value.slice(0,-1)">
+                                    < </div>
+                                        <div class="button" onclick="document.getElementById('enterPin').value+='0'">0
+                                        </div>
+                                        <div class="button" onclick="document.getElementById('enterPin').value=''">C
+                                        </div>
+                                </div>
+                                <div>
+                                    <button id="submitBtn" type="submit" class="submit-btn">Submit</button>
+                                    <p class="action-left"><span id="actionLeft">3</span> try left</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="notify-section">
+                    <p id="didNotMatch" class="notify">❌ Pin Didn't Match, Please try again</p>
+                    <p id="matched" class="notify">✅ Pin Matched... Secret door is opening for you</p>
+                </div>
+            </div>
+        </div>
+
+
+
+        <script>
+            document.getElementById("submitBtn").addEventListener("click", function () {
+
+                let generatePin = document.getElementById('randomPin').value;
+                let submitPin = document.getElementById('enterPin').value
+                if (generatePin == submitPin) {
+                    document.getElementById("matched").style.display = "block"
+                }
+                else {
+                    document.getElementById("didNotMatch").style.display = "block"
+                    let totalActionLeft = parseInt(document.getElementById("actionLeft").innerText);
+                    totalActionLeft -= 1;
+                    document.getElementById("actionLeft").innerText = totalActionLeft;
+                    if (totalActionLeft == 0) {
+                        document.getElementById("submitBtn").disabled = true;
+                        document.getElementById("submitBtn").style.backgroundColor = "#f0ad4e";
+                    }
+                }
+            })
+        </script>
+</body>
+
+</html>
